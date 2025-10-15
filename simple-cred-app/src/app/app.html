@@ -1,0 +1,66 @@
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="title-overlay">
+      <h1>Product Management</h1>
+    </div>
+    <button class="logout-btn" (click)="logout()" *ngIf="loggedIn">Logout</button>
+  </div>
+
+  <!-- Login Form -->
+  <div *ngIf="!loggedIn" class="login-card">
+    <h2>Login</h2>
+    <input type="text" placeholder="Username" [(ngModel)]="username">
+    <input type="password" placeholder="Password" [(ngModel)]="password">
+    <button (click)="login()">Login</button>
+    <p class="error" *ngIf="error">{{ error }}</p>
+    <p style="margin-top: 10px; text-align: right;">
+      <a href="#" (click)="forgotPassword()" class="forgot-link">Forgot Password?</a>
+    </p>
+  </div>
+
+  <!-- Products Dashboard -->
+  <div *ngIf="loggedIn" class="dashboard">
+
+    <!-- Add Product -->
+    <div class="card add-card">
+      <h2>Add New Product</h2>
+      <input type="text" placeholder="Product Name" [(ngModel)]="newName">
+      <input type="number" placeholder="Price ($)" [(ngModel)]="newPrice">
+      <input type="file" (change)="onFileSelected($event)">
+      <button (click)="addProduct()">Add Product</button>
+    </div>
+
+    <!-- Product List -->
+    <div class="product-grid">
+      <div class="card product-card" *ngFor="let p of products">
+
+        <!-- Edit Mode -->
+        <div *ngIf="editingId === p.id">
+          <input type="text" [(ngModel)]="editName">
+          <input type="number" [(ngModel)]="editPrice">
+          <input type="file" (change)="onEditFileSelected($event)">
+          <div class="btn-group">
+            <button (click)="updateProduct()">Save</button>
+            <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+          </div>
+        </div>
+
+        <!-- View Mode -->
+        <div *ngIf="editingId !== p.id">
+          <img *ngIf="p.imageUrl" [src]="'http://localhost:8080' + p.imageUrl"
+               alt="{{p.name}}" style="width:100%; height:200px; object-fit:cover; border-radius:8px; margin-bottom:10px;">
+          <h3>{{ p.name }}</h3>
+          <p>Price: ${{ p.price }}</p>
+          <div class="btn-group">
+            <button (click)="startEdit(p)">Edit</button>
+            <button class="delete-btn" (click)="deleteProduct(p.id)">Delete</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
