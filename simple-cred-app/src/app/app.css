@@ -1,6 +1,6 @@
 /* ===================== Global Container ===================== */
 body {
-  background: linear-gradient(135deg, #c8e6c9, #b2dfdb); /* soft gradient background */
+  background: linear-gradient(135deg, #c8e6c9, #b2dfdb); 
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   overflow-x: hidden;
 }
